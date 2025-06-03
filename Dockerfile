@@ -1,13 +1,11 @@
-# Use Maven to build the application
-FROM maven:3.8.6-openjdk-17 AS build
+# Stage 1: Build with Maven and Java 17
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Use a minimal base image for the final container
-FROM openjdk:17-jdk-slim
+# Stage 2: Run with lightweight JDK image
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-
-# Run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
