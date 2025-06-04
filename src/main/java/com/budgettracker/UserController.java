@@ -25,12 +25,12 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    @PostMapping("/users")
+    @PostMapping("/add-user")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         return ResponseEntity.ok(userRepository.save(user));
     }
 
-    @GetMapping("/get-user")
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userRepository.findAll());
     }
